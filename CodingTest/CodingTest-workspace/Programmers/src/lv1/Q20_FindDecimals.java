@@ -33,26 +33,35 @@ public class Q20_FindDecimals {
 	}
 
 	public static int solution(int n) {
-		// 소수 카운트 변수 선언
-		int answer = 0; 
+		// 시간 초과로 실패 코드
+		/*
+		 * // 소수 카운트 변수 선언 int answer = 0;
+		 * 
+		 * // 1은 소수도 합성수도 아니기 때문에 2부터 반복 시작 for(int i=2; i<=n; i++) { // 약수 카운트 변수 선언
+		 * int cnt = 0;
+		 * 
+		 * // i%j==0인 경우 j는 i의 약수이다. 소수는 1과 자기 자신(i)만을 약수로 가지는 수로 약수의 개수는 2개이다. cnt가 2이면
+		 * i는 소수이다. for(int j=1; j<=i; j++) { if(cnt>2) { break; } else if(i%j==0) {
+		 * cnt++; } }
+		 * 
+		 * // i가 소수이면 소수 카운트를 증가시킨다. if(cnt == 2) { answer+=1; } } return answer;
+		 */
 		
-		// 1은 소수도 합성수도 아니기 때문에 2부터 반복 시작
-		for(int i=2; i<=n; i++) {
-			// 약수 카운트 변수 선언
-			int cnt = 0;
-			
-			// i%j==0인 경우 j는 i의 약수이다. 소수는 1과 자기 자신(i)만을 약수로 가지는 수로 약수의 개수는 2개이다. cnt가 2이면 i는 소수이다.
-			for(int j=1; j<=i; j++) {
-				if(i%j==0) {
-					cnt++;
-				}
-			}
-			
-			// i가 소수이면 소수 카운트를 증가시킨다.
-			if(cnt == 2) {
-				answer+=1;
-			}
-		}
-		return answer;
+		// 에라토스테네스의 체 사용
+		  int answer = 0;
+          
+          for(int i=2; i<=n; i++) {
+              boolean flag = true;
+              for(int j=2; j<i; j++) {
+                  if(i%j==0) {
+                      flag = false;
+                      break;
+                  }
+              }
+              
+              if(flag==true) answer++;
+          }
+          
+          return answer;
 	}
 }
