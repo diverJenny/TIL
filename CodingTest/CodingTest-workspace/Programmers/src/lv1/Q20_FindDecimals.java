@@ -3,6 +3,8 @@ package lv1;
 import java.util.Scanner;
 
 /*
+** 소수찾기 **
+
 문제 설명
 1부터 입력받은 숫자 n 사이에 있는 소수의 개수를 반환하는 함수, solution을 만들어 보세요.
 
@@ -46,22 +48,46 @@ public class Q20_FindDecimals {
 		 * 
 		 * // i가 소수이면 소수 카운트를 증가시킨다. if(cnt == 2) { answer+=1; } } return answer;
 		 */
-		
+
+		// 에라토스테네스의 체 사용 -> 효율성 실패 코드
+		/*
+		 * int answer = 0;
+		 * 
+		 * for(int i=2; i<=n; i++) { boolean flag = true; for(int j=2; j<i; j++) {
+		 * if(i%j==0) { flag = false; break; } }
+		 * 
+		 * if(flag==true) answer++; }
+		 * 
+		 * return answer;
+		 */
+
 		// 에라토스테네스의 체 사용
-		  int answer = 0;
-          
-          for(int i=2; i<=n; i++) {
-              boolean flag = true;
-              for(int j=2; j<i; j++) {
-                  if(i%j==0) {
-                      flag = false;
-                      break;
-                  }
-              }
-              
-              if(flag==true) answer++;
-          }
-          
-          return answer;
+		int answer = 0;
+        
+        int[] number = new int[n+1];
+        
+        //2부터 n까지의 수를 배열에 넣는다.
+        for(int i=2; i<=n; i++) {
+            number[i] = i;
+        }
+        
+        //2부터 시작해서 그의 배수들을 0으로 만든다.
+        //후에 0이면 넘어가고 아니면 그의 배수들을 다시 0으로 만든다.
+        for(int i=2; i<=n; i++) {
+            if(number[i]==0) continue;
+            
+            for(int j= 2*i; j<=n; j += i) {
+                number[j] = 0;
+            }
+        }
+        
+        //배열에서 0이 아닌 것들의 개수를 세준다.
+        for(int i=0; i<number.length; i++) {
+            if(number[i]!=0) {
+                answer++;
+            }
+        }
+        
+        return answer;
 	}
 }
